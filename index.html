@@ -29,8 +29,8 @@
             border-radius: 1.5rem; /* Yuvarlak köşeler */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Hafif gölge */
             text-align: center;
-            max-width: 95%; /* Küçük ekranlarda sığmasını sağlar */
-            width: 700px; /* Kartın maksimum genişliği artırıldı */
+            max-width: 90%; /* Küçük ekranlarda sığmasını sağlar */
+            width: 500px; /* Kartın maksimum genişliği */
             margin-bottom: 2rem; /* Footer ile arasında boşluk */
         }
         .question {
@@ -73,13 +73,11 @@
         }
         .running-button-container {
             position: relative; /* Kaçan buton için konumlandırma */
-            width: 100%; /* Butonun kaçabileceği alan genişliği önceki haline döndürüldü */
-            height: 400px; /* Butonun kaçabileceği alan yüksekliği önceki haline döndürüldü */
+            width: 100%;
+            height: 400px; /* Butonun kaçabileceği alan artırıldı */
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Butonun kaçacağı alanı görselleştirmek için geçici bir kenarlık ekleyebilirsin:
-            border: 1px dashed gray; */
         }
         .running-button {
             position: absolute; /* Kaçan butonun mutlak konumu */
@@ -113,13 +111,6 @@
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
-        }
-        .result-image {
-            max-width: 80%; /* Resmin sayfa genişliğini aşmamasını sağlar */
-            height: auto; /* Oranını korur */
-            border-radius: 1.5rem; /* Yuvarlak köşeler */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Hafif gölge */
-            margin-bottom: 2rem;
         }
         .result-emoji {
             font-size: 10rem; /* Emoji boyutu */
@@ -160,12 +151,6 @@
         <div class="result-emoji">🖕</div>
     </div>
 
-    <!-- Komik fotoğraf sayfası (başlangıçta gizli) -->
-    <!-- Bu kısım kaldırıldı, çünkü artık komik fotoğraf sayfası yok -->
-    <!-- <div id="funnyPhotoPage" class="result-page hidden">
-        <img src="https://placehold.co/400x400/FF0000/FFFFFF?text=Senin+Komik+Fotoğrafın" alt="Komik Fotoğraf" class="result-image">
-    </div> -->
-
     <!-- Kırmızı kalp sayfası (başlangıçta gizli) -->
     <div id="redHeartPage" class="result-page hidden">
         <div class="result-emoji" style="color: red;">❤️</div>
@@ -179,8 +164,7 @@
         // Sayfadaki elementleri alıyoruz
         const question1Card = document.getElementById('question1Card');
         const question2Card = document.getElementById('question2Card');
-        const middleFingerPage = document.getElementById('middleFingerPage'); // Orta parmak sayfası
-        // const funnyPhotoPage = document.getElementById('funnyPhotoPage'); // Komik fotoğraf sayfası kaldırıldı
+        const middleFingerPage = document.getElementById('middleFingerPage');
         const redHeartPage = document.getElementById('redHeartPage');
         const noButtonQ2 = document.getElementById('noButtonQ2');
 
@@ -188,7 +172,6 @@
         question1Card.classList.remove('hidden');
         question2Card.classList.add('hidden');
         middleFingerPage.classList.add('hidden');
-        // funnyPhotoPage.classList.add('hidden'); // Komik fotoğraf sayfası kaldırıldı
         redHeartPage.classList.add('hidden');
 
         // İkinci soruyu gösteren fonksiyon
@@ -207,21 +190,16 @@
         function showMiddleFinger() {
             question1Card.classList.add('hidden'); // İlk soruyu gizle
             middleFingerPage.classList.remove('hidden'); // Orta parmak sayfasını göster
+            // Footer'ı gizleme kodu kaldırıldı
+            // document.querySelector('.footer').classList.add('hidden');
         }
-
-        // Komik fotoğraf sayfasını gösteren fonksiyon kaldırıldı
-        /*
-        function showFunnyPhoto() {
-            question2Card.classList.add('hidden'); // İkinci soruyu gizle (eğer açıksa)
-            question1Card.classList.add('hidden'); // İlk soruyu gizle (eğer açıksa)
-            funnyPhotoPage.classList.remove('hidden'); // Komik fotoğraf sayfasını göster
-        }
-        */
 
         // Kırmızı kalp sayfasını gösteren fonksiyon
         function showRedHeart() {
             question2Card.classList.add('hidden'); // İkinci soruyu gizle
             redHeartPage.classList.remove('hidden'); // Kırmızı kalp sayfasını göster
+            // Footer'ı gizleme kodu kaldırıldı
+            // document.querySelector('.footer').classList.add('hidden');
         }
 
         // Kaçan butonu hareket ettiren fonksiyon
