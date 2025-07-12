@@ -73,8 +73,8 @@
         }
         .running-button-container {
             position: relative; /* Kaçan buton için konumlandırma */
-            width: 90%; /* Butonun kaçabileceği alan genişliği artırıldı */
-            height: 600px; /* Butonun kaçabileceği alan yüksekliği daha da artırıldı */
+            width: 100%; /* Butonun kaçabileceği alan genişliği önceki haline döndürüldü */
+            height: 400px; /* Butonun kaçabileceği alan yüksekliği önceki haline döndürüldü */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -150,7 +150,7 @@
             <button class="button yes" onclick="showRedHeart()">Evet</button>
             <!-- Kaçan buton için ayrı bir kapsayıcı -->
             <div class="running-button-container">
-                <button id="noButtonQ2" class="running-button" onmouseover="moveNoButton()" onclick="showFunnyPhoto()">Hayır</button>
+                <button id="noButtonQ2" class="running-button" onmouseover="moveNoButton()">Hayır</button>
             </div>
         </div>
     </div>
@@ -161,10 +161,10 @@
     </div>
 
     <!-- Komik fotoğraf sayfası (başlangıçta gizli) -->
-    <div id="funnyPhotoPage" class="result-page hidden">
-        <!-- Buraya kendi komik fotoğrafının URL'sini ekle -->
+    <!-- Bu kısım kaldırıldı, çünkü artık komik fotoğraf sayfası yok -->
+    <!-- <div id="funnyPhotoPage" class="result-page hidden">
         <img src="https://placehold.co/400x400/FF0000/FFFFFF?text=Senin+Komik+Fotoğrafın" alt="Komik Fotoğraf" class="result-image">
-    </div>
+    </div> -->
 
     <!-- Kırmızı kalp sayfası (başlangıçta gizli) -->
     <div id="redHeartPage" class="result-page hidden">
@@ -180,7 +180,7 @@
         const question1Card = document.getElementById('question1Card');
         const question2Card = document.getElementById('question2Card');
         const middleFingerPage = document.getElementById('middleFingerPage'); // Orta parmak sayfası
-        const funnyPhotoPage = document.getElementById('funnyPhotoPage'); // Komik fotoğraf sayfası
+        // const funnyPhotoPage = document.getElementById('funnyPhotoPage'); // Komik fotoğraf sayfası kaldırıldı
         const redHeartPage = document.getElementById('redHeartPage');
         const noButtonQ2 = document.getElementById('noButtonQ2');
 
@@ -188,7 +188,7 @@
         question1Card.classList.remove('hidden');
         question2Card.classList.add('hidden');
         middleFingerPage.classList.add('hidden');
-        funnyPhotoPage.classList.add('hidden');
+        // funnyPhotoPage.classList.add('hidden'); // Komik fotoğraf sayfası kaldırıldı
         redHeartPage.classList.add('hidden');
 
         // İkinci soruyu gösteren fonksiyon
@@ -209,12 +209,14 @@
             middleFingerPage.classList.remove('hidden'); // Orta parmak sayfasını göster
         }
 
-        // Komik fotoğraf sayfasını gösteren fonksiyon
+        // Komik fotoğraf sayfasını gösteren fonksiyon kaldırıldı
+        /*
         function showFunnyPhoto() {
             question2Card.classList.add('hidden'); // İkinci soruyu gizle (eğer açıksa)
             question1Card.classList.add('hidden'); // İlk soruyu gizle (eğer açıksa)
             funnyPhotoPage.classList.remove('hidden'); // Komik fotoğraf sayfasını göster
         }
+        */
 
         // Kırmızı kalp sayfasını gösteren fonksiyon
         function showRedHeart() {
