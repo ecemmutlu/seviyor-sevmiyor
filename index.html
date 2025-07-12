@@ -29,8 +29,8 @@
             border-radius: 1.5rem; /* Yuvarlak köşeler */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Hafif gölge */
             text-align: center;
-            max-width: 90%; /* Küçük ekranlarda sığmasını sağlar */
-            width: 500px; /* Kartın maksimum genişliği */
+            max-width: 95%; /* Küçük ekranlarda sığmasını sağlar */
+            width: 700px; /* Kartın maksimum genişliği artırıldı */
             margin-bottom: 2rem; /* Footer ile arasında boşluk */
         }
         .question {
@@ -74,7 +74,7 @@
         .running-button-container {
             position: relative; /* Kaçan buton için konumlandırma */
             width: 100%;
-            height: 100px; /* Butonun kaçabileceği alan */
+            height: 200px; /* Butonun kaçabileceği alan artırıldı */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -158,7 +158,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer">Made with ❤️ by ec</div>
+    <div class="footer">made with ❤️ by ec</div>
 
     <script>
         // Sayfadaki elementleri alıyoruz
@@ -211,6 +211,7 @@
 
             // Kapsayıcı içinde rastgele yeni bir konum hesapla
             // Butonun kenarlardan taşmamasını sağlıyoruz
+            // Daha uzağa kaçması için rastgele aralığı artırıyoruz
             const newX = Math.random() * (containerRect.width - buttonRect.width);
             const newY = Math.random() * (containerRect.height - buttonRect.height);
 
