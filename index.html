@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mert'e Sürpriz!</title>
+    <!-- Tailwind CSS CDN'i yükleniyor. Bu, sayfanın güzel görünmesini sağlayacak. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Inter yazı tipini kullanıyoruz. */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Açık lila arka plan rengi */
+            background-color: #E6E6FA; /* Lavender rengi */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Sayfanın tamamını kaplamasını sağlar */
+            margin: 0;
+            padding: 20px; /* Kenarlardan boşluk bırakır */
+            box-sizing: border-box; /* Padding'in genişliği etkilememesini sağlar */
+            overflow: hidden; /* Kaçan butonun dışarı taşmasını engeller */
+        }
+        .card {
+            background-color: white;
+            padding: 3rem; /* Kartın iç boşluğu */
+            border-radius: 1.5rem; /* Yuvarlak köşeler */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+            text-align: center;
+            max-width: 90%; /* Küçük ekranlarda sığmasını sağlar */
+            width: 500px; /* Kartın maksimum genişliği */
+            margin-bottom: 2rem; /* Footer ile arasında boşluk */
+        }
+        .question {
+            font-size: 2.5rem; /* Soru metni boyutu */
+            font-weight: 700; /* Kalın yazı */
+            color: #4B0082; /* Koyu mor renk */
+            margin-bottom: 2.5rem; /* Soru ile butonlar arası boşluk */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem; /* Butonlar arası boşluk */
+            flex-wrap: wrap; /* Küçük ekranlarda alt alta gelmelerini sağlar */
+        }
+        .button {
+            padding: 1rem 2.5rem; /* Buton iç boşluğu */
+            border-radius: 9999px; /* Çok yuvarlak köşeler (hap şeklinde) */
+            font-size: 1.5rem; /* Buton yazı boyutu */
+            font-weight: 600; /* Buton yazısı kalınlığı */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Yumuşak geçiş efekti */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Buton gölgesi */
+            border: none; /* Kenarlık yok */
+        }
+        .button.yes {
+            background-color: #8A2BE2; /* Mavi-mor renk */
+            color: white;
+        }
+        .button.yes:hover {
+            background-color: #6A1BA0; /* Koyu mavi-mor */
+            transform: translateY(-3px); /* Hafif yukarı kalkma efekti */
+        }
+        .button.no {
+            background-color: #FF6347; /* Domates kırmızısı */
+            color: white;
+        }
+        .button.no:hover {
+            background-color: #E55337; /* Koyu domates kırmızısı */
+            transform: translateY(-3px); /* Hafif yukarı kalkma efekti */
+        }
+        .running-button-container {
+            position: relative; /* Kaçan buton için konumlandırma */
+            width: 100%;
+            height: 100px; /* Butonun kaçabileceği alan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .running-button {
+            position: absolute; /* Kaçan butonun mutlak konumu */
+            transition: all 0.1s ease-out; /* Hızlı kaçma efekti */
+            background-color: #FF6347; /* Domates kırmızısı */
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            z-index: 10; /* Diğer elementlerin üzerinde olmasını sağlar */
+        }
+        .footer {
+            margin-top: auto; /* Sayfanın en altına yapışmasını sağlar */
+            padding-top: 2rem;
+            font-size: 1.1rem;
+            color: #6A1BA0; /* Koyu mor */
+            font-weight: 600;
+        }
+        /* Yeni sayfa stilleri */
+        .result-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #E6E6FA;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .result-emoji {
+            font-size: 10rem; /* Emoji boyutu */
+            margin-bottom: 2rem;
+        }
+        .result-text {
+            font-size: 3rem; /* Metin boyutu */
+            font-weight: 700;
+            color: #4B0082;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- İlk soru kartı -->
+    <div id="question1Card" class="card">
+        <div class="question">Ecem'i seviyor musun?</div>
+        <div class="button-container">
+            <button class="button yes" onclick="showQuestion2()">Evet</button>
+            <button class="button no" onclick="showMiddleFinger()">Hayır</button>
+        </div>
+    </div>
+
+    <!-- İkinci soru kartı (başlangıçta gizli) -->
+    <div id="question2Card" class="card hidden">
+        <div class="question">Ecem her zaman haklı mı?</div>
+        <div class="button-container">
+            <button class="button yes" onclick="showRedHeart()">Evet</button>
+            <!-- Kaçan buton için ayrı bir kapsayıcı -->
+            <div class="running-button-container">
+                <button id="noButtonQ2" class="running-button" onmouseover="moveNoButton()">Hayır</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orta parmak sayfası (başlangıçta gizli) -->
+    <div id="middleFingerPage" class="result-page hidden">
+        <div class="result-emoji">🖕</div>
+    </div>
+
+    <!-- Kırmızı kalp sayfası (başlangıçta gizli) -->
+    <div id="redHeartPage" class="result-page hidden">
+        <div class="result-emoji" style="color: red;">❤️</div>
+        <div class="result-text">Seni çok seviyorum merto!</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">Made with ❤️ by ec</div>
+
+    <script>
+        // Sayfadaki elementleri alıyoruz
+        const question1Card = document.getElementById('question1Card');
+        const question2Card = document.getElementById('question2Card');
+        const middleFingerPage = document.getElementById('middleFingerPage');
+        const redHeartPage = document.getElementById('redHeartPage');
+        const noButtonQ2 = document.getElementById('noButtonQ2');
+
+        // Başlangıçta sadece ilk soruyu göster
+        question1Card.classList.remove('hidden');
+        question2Card.classList.add('hidden');
+        middleFingerPage.classList.add('hidden');
+        redHeartPage.classList.add('hidden');
+
+        // İkinci soruyu gösteren fonksiyon
+        function showQuestion2() {
+            question1Card.classList.add('hidden'); // İlk soruyu gizle
+            question2Card.classList.remove('hidden'); // İkinci soruyu göster
+            // Kaçan butonun başlangıç konumunu sıfırla
+            noButtonQ2.style.transform = 'translate(0, 0)';
+            noButtonQ2.style.left = 'auto';
+            noButtonQ2.style.top = 'auto';
+            noButtonQ2.style.right = 'auto';
+            noButtonQ2.style.bottom = 'auto';
+        }
+
+        // Orta parmak sayfasını gösteren fonksiyon
+        function showMiddleFinger() {
+            question1Card.classList.add('hidden'); // İlk soruyu gizle
+            middleFingerPage.classList.remove('hidden'); // Orta parmak sayfasını göster
+            // Footer'ı gizle, bu sayfada görünmesin
+            document.querySelector('.footer').classList.add('hidden');
+        }
+
+        // Kırmızı kalp sayfasını gösteren fonksiyon
+        function showRedHeart() {
+            question2Card.classList.add('hidden'); // İkinci soruyu gizle
+            redHeartPage.classList.remove('hidden'); // Kırmızı kalp sayfasını göster
+            // Footer'ı gizle, bu sayfada görünmesin
+            document.querySelector('.footer').classList.add('hidden');
+        }
+
+        // Kaçan butonu hareket ettiren fonksiyon
+        function moveNoButton() {
+            // Butonun içinde bulunduğu kapsayıcının boyutlarını alıyoruz
+            const container = noButtonQ2.parentElement;
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noButtonQ2.getBoundingClientRect();
+
+            // Kapsayıcı içinde rastgele yeni bir konum hesapla
+            // Butonun kenarlardan taşmamasını sağlıyoruz
+            const newX = Math.random() * (containerRect.width - buttonRect.width);
+            const newY = Math.random() * (containerRect.height - buttonRect.height);
+
+            // Butonun konumunu değiştir
+            noButtonQ2.style.left = `${newX}px`;
+            noButtonQ2.style.top = `${newY}px`;
+            noButtonQ2.style.transform = 'translate(0, 0)'; // Transform'u sıfırla ki left/top düzgün çalışsın
+        }
+    </script>
+</body>
+</html>
